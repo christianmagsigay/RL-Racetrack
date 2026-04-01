@@ -5,6 +5,11 @@ This project implements **on-policy Monte Carlo control with ε-soft policies** 
 The goal is to learn a policy that drives a car from a start line to a finish line **as fast as possible**, while respecting velocity dynamics and avoiding crashes.
 
 ---
+# Presentation Slides
+
+https://canva.link/n6t0cvavdumgs5v
+
+---
 
 # Problem Overview
 
