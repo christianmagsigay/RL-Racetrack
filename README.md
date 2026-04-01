@@ -1,4 +1,4 @@
-# 🏎️ Racetrack Reinforcement Learning (Monte Carlo Control)
+# Racetrack Reinforcement Learning (Monte Carlo Control)
 
 This project implements **on-policy Monte Carlo control with ε-soft policies** to solve the classic **racetrack problem** (Sutton & Barto, Exercise 5.12).
 
@@ -6,7 +6,7 @@ The goal is to learn a policy that drives a car from a start line to a finish li
 
 ---
 
-# 📌 Problem Overview
+# Problem Overview
 
 The environment models a car moving on a 2D racetrack with:
 
@@ -27,7 +27,7 @@ The environment models a car moving on a 2D racetrack with:
 
 ---
 
-# 🧠 Algorithm
+# Algorithm
 
 We use **on-policy Monte Carlo control (ε-soft)**.
 
@@ -39,7 +39,7 @@ We use **on-policy Monte Carlo control (ε-soft)**.
 
 ---
 
-# 🔁 Learning Loop
+# Learning Loop
 
 1. Generate an episode using current policy  
 2. Compute returns for each timestep  
@@ -49,7 +49,7 @@ We use **on-policy Monte Carlo control (ε-soft)**.
 
 ---
 
-# ⚠️ Practical Modifications
+# Practical Modifications
 
 Compared to textbook MC:
 
@@ -59,7 +59,7 @@ Compared to textbook MC:
 
 ---
 
-# 📊 Visualizations
+# Visualizations
 
 ## 1. Value Function
 
@@ -84,32 +84,8 @@ Compared to textbook MC:
 
 ---
 
-# 🧩 Key Insights
-
-### 🚗 Learned behavior:
-- Accelerate early to build speed  
-- Follow diagonal path along track  
-- Avoid boundaries  
-- Adjust near finish due to noise  
-
----
-
-### ⚠️ Non-stationarity:
-- Policy changes over time  
-- Early episodes become irrelevant  
-- Fixed step-size `α` helps “forget” bad experience  
-
----
-
-### 📉 Plateau behavior:
-- Learning stabilizes but does not fully converge  
-- Due to:
-- constant ε (ongoing exploration)
-- stochastic dynamics  
-
----
-
 # 🛠️ Project Structure
+```bash
 .
 ├── racetrack/
 │   ├── *.csv              # track layouts
@@ -118,6 +94,7 @@ Compared to textbook MC:
 ├── Magsigay_RL_Project    # Main notebook
 ├── media/                 # saved plots
 └── README.md
+```
 
 ---
 
