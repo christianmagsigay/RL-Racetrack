@@ -78,13 +78,9 @@ Compared to textbook MC:
 - Arrows represent **average acceleration**
 - Averaged over velocities
 
-⚠️ **Important:**
-- Arrows show **acceleration**, not movement  
-- Actual motion depends on velocity  
-
 ---
 
-# 🛠️ Project Structure
+# Project Structure
 ```bash
 .
 ├── racetrack/
@@ -104,7 +100,7 @@ Install independencies
 pip install gym numpy matplotlib scikit-image
 ```
 
-# 📈 Output
+# Output
 
 The code produces:
 
@@ -120,12 +116,12 @@ media\
 
 ---
 
-# 📚 References
+# References
 
 - Sutton & Barto, *Reinforcement Learning: An Introduction*, Chapter 5  
 
 ---
 
-# 🎯 Summary
+# Summary
 
 > This project demonstrates how Monte Carlo control can learn a momentum-aware, risk-sensitive driving policy in a stochastic racetrack environment.
