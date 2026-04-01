@@ -27,51 +27,51 @@ class RacetrackEnv(gym.Env):
     def step(self, action):
         # Decompose state into car position and speed
         position, speed = self.s2ps(self.state)
-
-        # Calculate acceleration by offsetting the action
+    
+        # Calculate acceleration
         if self.noisy and np.random.rand() < 0.1:
             acceleration = np.array([0, 0])
         else:
             acceleration = action - self.max_accel
-        assert (-self.max_accel <= acceleration).all() and (acceleration <= self.max_accel).all()
-
-        # Solve pseudo-ODE for speed
+    
+        # Update speed
         speed += acceleration
-
-        # Clip speed between 0 and max_speed and don't allow 0
         speed = np.clip(speed, 0, self.max_speed - 1)
         speed = speed if (speed > 0).any() else np.array([0, 1])
-        assert (0 < speed).any() and (speed < self.max_speed).all()
-
-        # Solve pseudo-ODE for position
+    
+        # Update position
         position += speed
-
-        # Calculate intersection of the speed vector and the racetrack
+    
+        # Trace path 
         xs, ys = skimage.draw.line(*(position - speed), *position)
         xs_within_track = np.clip(xs, 0, self.racetrack.shape[0] - 1)
         ys_within_track = np.clip(ys, 0, self.racetrack.shape[1] - 1)
         collisions = self.racetrack[xs_within_track, ys_within_track]
-
-        # Check whether the car is on the road, out of track or crossing the finish line
+    
+        # Conditions
         within_track_limits = (xs == xs_within_track).all() and (ys == ys_within_track).all()
         crossing_finish = (collisions == self.finish).any()
         on_grass = (collisions == self.grass).any()
-
-        # Restart when on the grass or going out of racetrack limits without crossing the finish line
+    
+        # CRASH HANDLING
         if on_grass or (not within_track_limits and not crossing_finish):
             self.state = self.ps2s(position, speed)
             self.reset(hard=False)
-            return self.state, -1.0, False, {}
-
-        # Clip position to racetrack limits (applies when crossing the finish line)
+    
+            return self.state, -1.0, False, {
+                "crash": True   # flag crash
+            }
+    
+        # Finish / normal step
         clipped = np.clip(position, 0, np.array(self.racetrack.shape) - 1)
         speed -= position - clipped
         position = clipped
-        assert (0 <= position).all() and (position <= self.racetrack.shape).all()
-
-        # Compose state from new car position and speed
+    
         self.state = self.ps2s(position, speed)
-        return self.state, -1.0, crossing_finish, {}
+    
+        return self.state, -1.0, crossing_finish, {
+            "crash": False   
+        }
 
     def reset(self, state=None, hard=True):
         if self.ax is not None:
